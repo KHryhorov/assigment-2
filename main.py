@@ -30,17 +30,32 @@ print(mean_mag)
 print(median_mag)
 print(max_mag)
 
-top5=df.nlargest(5,"magnitude")["place","magnitude","time"]
+top5=df.nlargest(5,"magnitude")[["place","magnitude","time"]]
 print(top5)
-cor=df.["magnitude"].corr(df["depth"])
+cor=df["magnitude"].corr(df["depth"])
 print(cor)
-region_counts=df.["region"].value_counts()
+region_counts=df["place"].value_counts()
 print(region_counts.head())
-plt.hist(df["Magnitude"], bins=20)
+plt.hist(df["magnitude"],bins=20)
 plt.xlabel("Магнітуда")
 plt.ylabel("Кількість")
 plt.title("Розподіл магнітуд землетрусів (>3.0)")
 plt.show()
+
+plt.scatter(df["depth"], df["magnitude"])
+plt.x("Глибина (км)")
+plt.y("Магнітуда")
+plt.title("Залежність магнітуди від глибини")
+plt.show()
+
+top_regions = region_counts.head(5)
+plt.bar(top_regions.index, top_regions.values)
+plt.x("Регіон")
+plt.y("Кількість землетрусів")
+plt.title("Топ5 регіонів по кількості землетрусив ")
+plt.xticks(rotation=20)
+plt.show()
+
 
 
 
